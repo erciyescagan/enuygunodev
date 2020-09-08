@@ -12,5 +12,5 @@ startpage:
         _locale: '%locale%'
 
 homepage:
-  path: /lucky/number
-  controller: App\Controller\LuckyController::number
+  path: /startpage/index
+  controller: App\Controller\StartpageController::index
