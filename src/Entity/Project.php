@@ -37,6 +37,11 @@ class Project
      */
     private $Status;
 
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private $Assigned;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Project
     public function setStatus(string $Status): self
     {
         $this->Status = $Status;
+
+        return $this;
+    }
+
+    public function getAssigned(): ?string
+    {
+        return $this->Assigned;
+    }
+
+    public function setAssigned(?string $Assigned): self
+    {
+        $this->Assigned = $Assigned;
 
         return $this;
     }

@@ -27,6 +27,11 @@ class Assignments
      */
     private $DevId;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ProjectId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Assignments
     public function setDevId(int $DevId): self
     {
         $this->DevId = $DevId;
+
+        return $this;
+    }
+
+    public function getProjectId(): ?int
+    {
+        return $this->ProjectId;
+    }
+
+    public function setProjectId(int $ProjectId): self
+    {
+        $this->ProjectId = $ProjectId;
 
         return $this;
     }

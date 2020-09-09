@@ -22,7 +22,7 @@ final class Version20200908161609 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SEQUENCE assignments_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        /*$this->addSql('CREATE SEQUENCE assignments_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE company_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE developers_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE params_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
@@ -37,7 +37,7 @@ final class Version20200908161609 extends AbstractMigration
         $this->addSql('CREATE TABLE project (id INT NOT NULL, name VARCHAR(255) NOT NULL, provider_id INT NOT NULL, company_id INT NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE provider (id INT NOT NULL, name VARCHAR(255) NOT NULL, request_url VARCHAR(255) NOT NULL, status VARCHAR(1) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE staff (id INT NOT NULL, company_id INT NOT NULL, dev_id INT NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE tasks (id INT NOT NULL, project_id INT NOT NULL, name VARCHAR(255) NOT NULL, difficulty INT NOT NULL, time INT NOT NULL, work_hours INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE tasks (id INT NOT NULL, project_id INT NOT NULL, name VARCHAR(255) NOT NULL, difficulty INT NOT NULL, time INT NOT NULL, work_hours INT NOT NULL, PRIMARY KEY(id))');*/
     }
 
     public function down(Schema $schema) : void
@@ -45,7 +45,7 @@ final class Version20200908161609 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
+        /*$this->addSql('CREATE SCHEMA public');
         $this->addSql('DROP SEQUENCE assignments_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE company_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE developers_id_seq CASCADE');
@@ -61,6 +61,6 @@ final class Version20200908161609 extends AbstractMigration
         $this->addSql('DROP TABLE project');
         $this->addSql('DROP TABLE provider');
         $this->addSql('DROP TABLE staff');
-        $this->addSql('DROP TABLE tasks');
+        $this->addSql('DROP TABLE tasks');*/
     }
 }
