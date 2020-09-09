@@ -6,8 +6,7 @@ Enuygun Ödevi için giriş sayfası
 
 namespace App\Controller;
 use App\Entity\Assignments;
-use App\Entity\Project;
-use App\Repository\AssignmentsRepository;
+
 use App\Repository\CompanyRepository;
 use App\Repository\DevelopersRepository;
 use App\Repository\ProjectRepository;
@@ -20,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StartpageController extends AbstractController
 {
-    public function index(ProjectRepository $projects, DevelopersRepository $devs, TasksRepository $tasks, AssignmentsRepository $assignments, CompanyRepository $companies): Response
+    public function index(ProjectRepository $projects, CompanyRepository $companies): Response
     {
         $cmpList = $companies->findBy(['Status' => 'A']);
         $prjList = $projects->findBy(['CompanyId' => $cmpList[0]->getId()], ['id' => 'DESC']);
