@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'startpage_index' %}
+
+{% block main %}
+
+    <div class="form-row">
+
+        <div class="form-group col-md-12">
+            <label for="inputState">Projects</label>
+            <select id="inputState" class="form-control">
+                <option id="-1" selected>Choose...</option>
+                {% for project in projects %}
+                <option id={{ project.id }}">{{ project.Name }}</option>
+                {% else %}
+                    <option>No projects are created</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group col-md-12">
+            <button type="submit" class="btn btn-primary">Calculate&Show Assignments</button>
+            <button type="submit" class="btn btn-secondary">Show Assignments</button>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+    {{ show_source_code(_self) }}
+    {{ include('blog/_rss.html.twig') }}
+{% endblock %}

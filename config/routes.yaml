@@ -14,3 +14,7 @@ startpage:
 homepage:
   path: /startpage/index
   controller: App\Controller\StartpageController::index
+
+resultpage:
+    path: /resultpage/index
+    controller: App\Controller\ResultpageController::index
