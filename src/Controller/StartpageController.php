@@ -6,7 +6,9 @@ Enuygun Ödevi için giriş sayfası
 
 namespace App\Controller;
 use App\Entity\Assignments;
+use App\Entity\Project;
 use App\Repository\AssignmentsRepository;
+use App\Repository\CompanyRepository;
 use App\Repository\DevelopersRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\TasksRepository;
@@ -18,16 +20,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StartpageController extends AbstractController
 {
-    public function index(ProjectRepository $projects, DevelopersRepository $devs, TasksRepository $tasks, AssignmentsRepository $assignments): Response
+    public function index(ProjectRepository $projects, DevelopersRepository $devs, TasksRepository $tasks, AssignmentsRepository $assignments, CompanyRepository $companies): Response
     {
-
-        $prjList = $projects->findBy(['CompanyId' => 1], ['id' => 'DESC']);
-        return $this->render('startpage/index.html.twig',['projects' => $prjList]);
+        $cmpList = $companies->findBy(['Status' => 'A']);
+        $prjList = $projects->findBy(['CompanyId' => $cmpList[0]->getId()], ['id' => 'DESC']);
+        return $this->render('startpage/index.html.twig',['projects' => $prjList, 'companies'=>$cmpList]);
 
 
     }
 
-    public function assignDevs(Request $request, TasksRepository $tasks, DevelopersRepository $devs, EntityManagerInterface $entityManager){
+    public function assignDevs(Request $request, TasksRepository $tasks, DevelopersRepository $devs, EntityManagerInterface $entityManager, ProjectRepository $projects){
 
 
         $companyID = $request->attributes->get('cid');
@@ -92,6 +94,12 @@ class StartpageController extends AbstractController
 
             $entityManager->persist($asEntity);
         }
+
+        //project update
+        $project = $projects->find($projectID);
+        $project->setAssigned('A');
+        $project->setCalculatedTime($mindays);
+        $entityManager->persist($project);
 
         $entityManager->flush();
 

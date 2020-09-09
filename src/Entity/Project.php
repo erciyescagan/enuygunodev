@@ -42,6 +42,11 @@ class Project
      */
     private $Assigned;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $calculatedTime;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Project
     public function setAssigned(?string $Assigned): self
     {
         $this->Assigned = $Assigned;
+
+        return $this;
+    }
+
+    public function getCalculatedTime(): ?int
+    {
+        return $this->calculatedTime;
+    }
+
+    public function setCalculatedTime(?int $calculatedTime): self
+    {
+        $this->calculatedTime = $calculatedTime;
 
         return $this;
     }
