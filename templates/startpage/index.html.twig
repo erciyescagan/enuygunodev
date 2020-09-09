@@ -6,12 +6,23 @@
 
     <div class="form-row">
 
-        <div class="form-group col-md-12">
-            <label for="inputState">Projects</label>
-            <select id="inputState" class="form-control">
-                <option id="-1" selected>Choose...</option>
+        <div class="form-group col-md-6">
+            <label for="inputCompany">Companies</label>
+            <select id="inputCompany" class="form-control">
+                <option value="-1" selected>Choose...</option>
                 {% for project in projects %}
-                <option id={{ project.id }}">{{ project.Name }}</option>
+                    <option value={{ project.id }}> {{ project.Name }} </option>
+                {% else %}
+                    <option>No companies are created</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputProject">Projects</label>
+            <select id="inputProject" class="form-control">
+                <option value="-1" selected>Choose...</option>
+                {% for project in projects %}
+                    <option value={{ project.id }}> {{ project.Name }} </option>
                 {% else %}
                     <option>No projects are created</option>
                 {% endfor %}
@@ -19,8 +30,12 @@
         </div>
 
         <div class="form-group col-md-12">
-            <button type="submit" class="btn btn-primary">Calculate&Show Assignments</button>
-            <button type="submit" class="btn btn-secondary">Show Assignments</button>
+            <a class="btn btn-primary" href="{{ path('assigndevs', {cid: 1, pid: 3}) }}">
+                <i class="fa fa-users" aria-hidden="true"></i> Create&Show Assignments
+            </a>
+            <a class="btn btn-success" href="{{ path('resultpage', {pid: 3}) }}">
+                <i class="fa fa-users" aria-hidden="true"></i> Show Assignments
+            </a>
         </div>
 
     </div>

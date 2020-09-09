@@ -16,5 +16,9 @@ homepage:
   controller: App\Controller\StartpageController::index
 
 resultpage:
-    path: /resultpage/index
+    path: /resultpage/index/project/{pid}
     controller: App\Controller\ResultpageController::index
+
+assigndevs:
+      path:       /startpage/assigndevs/company/{cid}/project/{pid}
+      controller: App\Controller\StartpageController::assignDevs

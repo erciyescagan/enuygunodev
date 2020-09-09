@@ -6,7 +6,6 @@ Enuygun Ödevi için giriş sayfası
 
 namespace App\Controller;
 use App\Entity\Assignments;
-use App\Entity\Staff;
 use App\Repository\AssignmentsRepository;
 use App\Repository\DevelopersRepository;
 use App\Repository\ProjectRepository;
@@ -19,10 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StartpageController extends AbstractController
 {
-    public function index(ProjectRepository $projects, DevelopersRepository $devs, TasksRepository $tasks): Response
+    public function index(ProjectRepository $projects, DevelopersRepository $devs, TasksRepository $tasks, AssignmentsRepository $assignments): Response
     {
-        $prjList = $projects->findBy(['CompanyId' => 1], ['id' => 'DESC']);
 
+        $prjList = $projects->findBy(['CompanyId' => 1], ['id' => 'DESC']);
         return $this->render('startpage/index.html.twig',['projects' => $prjList]);
 
 
@@ -30,34 +29,38 @@ class StartpageController extends AbstractController
 
     public function assignDevs(Request $request, TasksRepository $tasks, DevelopersRepository $devs, EntityManagerInterface $entityManager){
 
-        //developerlar
+
+        $companyID = $request->attributes->get('cid');
+        $projectID = $request->attributes->get('pid');
+
+        //developerları getir
         $devQR = $devs->createQueryBuilder("d")
             ->Select()
             ->leftJoin("App\Entity\Staff","s",Join::WITH,"s.DevId = d.id")
             ->where('s.companyId = :companyID')
             ->andWhere( 'd.Status = :status')
             ->setParameter('status', 'A')
-            ->setParameter('companyID', 1)
+            ->setParameter('companyID', $companyID)
             ->getQuery();
         $devList = $devQR->getResult();
 
-        //developerların günlük ürettiği iş
+        //developerların günlük ürettiği toplam iş
         $sumDevPL = $devs->createQueryBuilder("d")
             ->Select("sum(d.powerlevel*d.dailyhours)")
             ->leftJoin("App\Entity\Staff","s",Join::WITH,"s.DevId = d.id")
             ->where('s.companyId = :companyID')
             ->andWhere( 'd.Status = :status')
             ->setParameter('status', 'A')
-            ->setParameter('companyID', 1)
+            ->setParameter('companyID', $companyID)
             ->getQuery();
 
         $dailywork = $sumDevPL->getResult()[0][1];
 
-        //Toplam iş miktarı
+        //Projedeki toplam iş miktarı
         $sumTaskWH = $tasks->createQueryBuilder("t")
             ->Select("sum(t.WorkHours)")
             ->where('t.ProjectId = :projectID')
-            ->setParameter('projectID', 3)
+            ->setParameter('projectID', $projectID)
             ->getQuery();
 
         $totalWork = $sumTaskWH->getResult()[0][1];
@@ -72,7 +75,7 @@ class StartpageController extends AbstractController
         }
 
         //işler, miktara göre ters sıra ile
-        $taskList = $tasks->findBy(['ProjectId' => 3], ['WorkHours' => 'DESC']);
+        $taskList = $tasks->findBy(['ProjectId' => $projectID], ['WorkHours' => 'DESC']);
 
         //işlerin atanması
         foreach ($taskList as $key=> $task){
@@ -85,17 +88,22 @@ class StartpageController extends AbstractController
             $asEntity = new Assignments();
             $asEntity->setTaskId($task->getId());
             $asEntity->setDevId($max);
-            $asEntity->setProjectId(3);
+            $asEntity->setProjectId($projectID);
 
             $entityManager->persist($asEntity);
         }
 
         $entityManager->flush();
 
+        return $this->redirectToRoute('resultpage', array('pid'=>$projectID));
+
     }
 
     public function showResult(Request $request){
 
-        return $this->redirectToRoute('resultpage');
+
+        $projectID = $request->attributes->get('pid');
+
+        return $this->redirectToRoute('resultpage', array('pid'=>$projectID));
     }
 }
