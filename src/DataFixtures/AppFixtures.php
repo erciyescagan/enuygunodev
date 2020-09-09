@@ -17,7 +17,7 @@ use App\Entity\Params;
 use App\Entity\Provider;
 use App\Entity\Staff;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 //use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 //use Symfony\Component\String\Slugger\SluggerInterface;
 use http\Env;

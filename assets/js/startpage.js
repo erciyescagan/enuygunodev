@@ -1,11 +1,13 @@
 $( "#inputProject" ).change(function() {
-    $( "#btnAssign" ).href = "/startpage/assigndevs/company/" + $( "#inputCompany" ).val() + "/project/" + $(this).value;
-    $( "#btnReport" ).href = "/resultpage/index/project/" + $(this).value;
+    $( "#btnAssign" ).href = "/startpage/assigndevs/company/" + $( "#inputCompany" ).value + "/project/" + $( "#inputProject" ).value;
+    $( "#btnReport" ).href = "/resultpage/index/project/" + $( "#inputProject" ).value;
+    console.log($( "#inputProject" ).value);
 });
 
 $( "#inputCompany" ).change(function() {
-    $( "#btnAssign" ).href = "/startpage/assigndevs/company/" + $(this).val()+ "/project/" + $( "#inputProject" ).value ;
+    $( "#btnAssign" ).href = "/startpage/assigndevs/company/" + $( "#inputCompany" ).value + "/project/" + $( "#inputProject" ).value ;
     $( "#btnReport" ).href = "/resultpage/index/project/" + $( "#inputProject" ).value ;
+    console.log($( "#inputCompany" ).value );
 });
 
 
