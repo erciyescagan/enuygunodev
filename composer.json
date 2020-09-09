@@ -35,7 +35,7 @@
         "symfony/translation": "^5.1",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "^5.1",
-        "symfony/webpack-encore-bundle": "^1.4",
+        "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "^5.1",
         "tgalopin/html-sanitizer-bundle": "^1.2",
         "twig/intl-extra": "^3.0",

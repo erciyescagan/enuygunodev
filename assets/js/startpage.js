@@ -1,12 +1,12 @@
-$( "#inputProject" ).change(function() {
-    $( "#btnAssign" ).href = "/startpage/assigndevs/company/" + $( "#inputCompany" ).val() + "/project/" + $(this).value;
-    $( "#btnReport" ).href = "/resultpage/index/project/" + $(this).value;
-});
+$("#inputProject").change(function () {
+    $("#btnAssign").attr('href',"/startpage/assigndevs/company/" + $("#inputCompany").val() + "/project/" + $("#inputProject").val());
+    $("#btnReport").attr('href',"/resultpage/index/project/" + $("#inputProject").val());
 
-$( "#inputCompany" ).change(function() {
-    $( "#btnAssign" ).href = "/startpage/assigndevs/company/" + $(this).val()+ "/project/" + $( "#inputProject" ).value ;
-    $( "#btnReport" ).href = "/resultpage/index/project/" + $( "#inputProject" ).value ;
 });
+$("#inputCompany").change(function () {
+    $("#btnAssign").attr('href',"/startpage/assigndevs/company/" + $("#inputCompany").val() + "/project/" + $("#inputProject").val());
+    $("#btnReport").attr('href',"/resultpage/index/project/" + $("#inputProject").val());
 
+});
 
 

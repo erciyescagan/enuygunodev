@@ -36,10 +36,10 @@
         </div>
 
         <div class="form-group col-md-12">
-            <a class="btn btn-primary" href="{{ path('assigndevs', {cid: companies|first.id, pid: 3}) }}">
+            <a id="btnAssign" class="btn btn-primary" href="{{ path('assigndevs', {cid: companies|first.id, pid: 3}) }}">
                 <i class="fa fa-users" aria-hidden="true"></i> Create&Show Assignments
             </a>
-            <a class="btn btn-success" href="{{ path('resultpage', {pid: 3}) }}">
+            <a id="btnReport" class="btn btn-success" href="{{ path('resultpage', {pid: 3}) }}">
                 <i class="fa fa-users" aria-hidden="true"></i> Show Assignments
             </a>
         </div>
