@@ -22,7 +22,43 @@ use function Symfony\Component\String\u;
  */
 class Validator
 {
-    public function validateUsername(?string $username): string
+    public function validateProjectname(?string $projectname): string
+    {
+        if (empty($projectname)) {
+            throw new InvalidArgumentException('The projectname can not be empty.');
+        }
+
+        if (1 !== preg_match('/^[a-z_]+$/', $projectname)) {
+            throw new InvalidArgumentException('The projectname must contain only lowercase latin characters and underscores.');
+        }
+
+        if (u($projectname)->trim()->length() < 6) {
+            throw new InvalidArgumentException('The projectname must be at least 6 characters long.');
+        }
+
+        return $projectname;
+    }
+
+    public function validateProvidername(?string $providername): string
+    {
+        if (empty($providername)) {
+            throw new InvalidArgumentException('The providername can not be empty.');
+        }
+
+        return $providername;
+    }
+
+    public function validateCompanyname(?string $companyname): string
+    {
+        if (empty($companyname)) {
+            throw new InvalidArgumentException('The companyname can not be empty.');
+        }
+
+
+        return $companyname;
+    }
+
+    /*public function validateUsername(?string $username): string
     {
         if (empty($username)) {
             throw new InvalidArgumentException('The username can not be empty.');
@@ -68,5 +104,5 @@ class Validator
         }
 
         return $fullName;
-    }
+    }*/
 }
