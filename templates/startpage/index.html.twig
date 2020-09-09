@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'startpage_index' %}
+
+{% block main %}
+
+    <div class="form-row">
+
+        <div class="form-group col-md-6">
+            <label for="inputCompany">Companies</label>
+            <select id="inputCompany" class="form-control">
+                {% for company in companies %}
+                    <option value={{ company.id }}> {{ company.Name }} </option>
+                {% else %}
+                    <option>No companies are created</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputProject">Projects</label>
+            <select id="inputProject" class="form-control">
+                <option value="-1" selected>Choose...</option>
+                {% for project in projects %}
+                    <option value={{ project.id }}> {{ project.Name }} {% if project.assigned == 'A' %}
+                            (Assigned)
+                        {% endif %} </option>
+                {% else %}
+                    <option>No projects are created</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group col-md-12">
+            <a class="btn btn-primary" href="{{ path('assigndevs', {cid: companies|first.id, pid: 3}) }}">
+                <i class="fa fa-users" aria-hidden="true"></i> Create&Show Assignments
+            </a>
+            <a class="btn btn-success" href="{{ path('resultpage', {pid: 3}) }}">
+                <i class="fa fa-users" aria-hidden="true"></i> Show Assignments
+            </a>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+    {{ parent() }}
+
+    {{ show_source_code(_self) }}
+    {{ include('blog/_rss.html.twig') }}
+{% endblock %}
