@@ -6,6 +6,17 @@
 
     <h4>Project {{ projectname }} can be completed in {{ projectweek }} weeks and {{ projectday }} days with these assignments.</h4>
 
+    {% if posts|length > 0 %}
+
+        <div id="div_chart"></div>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            {{ gc_draw(combochart, 'div_chart') }}
+        </script>
+
+    {% endif %}
+
     <h3>Assignments</h3>
 
     <table class="table table-striped table-middle-aligned">
