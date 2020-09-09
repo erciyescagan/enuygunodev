@@ -35,6 +35,12 @@ class StartpageController extends AbstractController
         $companyID = $request->attributes->get('cid');
         $projectID = $request->attributes->get('pid');
 
+        //proje kontrol
+        $project = $projects->find($projectID);
+        if($project->getAssigned() == 'A'){
+            return $this->redirectToRoute('resultpage', array('pid'=>$projectID));
+        }
+
         //developerları getir
         $devQR = $devs->createQueryBuilder("d")
             ->Select()
@@ -70,33 +76,35 @@ class StartpageController extends AbstractController
         //Minimum yapılabilecek süre, yukarı yuvarlanıyor
         $mindays = ceil($totalWork/$dailywork);
 
-        //developerların sayaçları, süre boyunca yapabilecekleri işe eşit
-        $devs = array();
+        //developerların sayaçları
+        $devs = array(); //iş saati
+        $devspl = array(); //yetenek seviyesi
         foreach ( $devList as $dev) {
-            $devs[$dev->getId()] = $dev->getPowerlevel() * $dev->getDailyhours() * $mindays;
+            $devs[$dev->getId()] = $dev->getDailyhours() * $mindays;
+            $devspl[$dev->getId()] = $dev->getPowerlevel();
         }
+        $max = array_keys($devspl, max($devspl))[0];//En büyük işin en iyi deve gitmesini garanti altına alıyoruz
 
         //işler, miktara göre ters sıra ile
         $taskList = $tasks->findBy(['ProjectId' => $projectID], ['WorkHours' => 'DESC']);
 
         //işlerin atanması
         foreach ($taskList as $key=> $task){
-            //En çok iş gücü boşluğu olan kişiyi bul
-            $max = array_keys($devs, max($devs))[0];
 
             //iş ataması
-            $devs[$max] -= $task->getWorkHours();
-
+            $devs[$max] -= ($task->getWorkHours()/$devspl[$max]);
             $asEntity = new Assignments();
             $asEntity->setTaskId($task->getId());
             $asEntity->setDevId($max);
             $asEntity->setProjectId($projectID);
 
+            //En çok iş gücü boşluğu olan kişiyi bul
+            $max = array_keys($devs, max($devs))[0];
+
             $entityManager->persist($asEntity);
         }
 
         //project update
-        $project = $projects->find($projectID);
         $project->setAssigned('A');
         $project->setCalculatedTime($mindays);
         $entityManager->persist($project);
